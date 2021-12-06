@@ -16,3 +16,7 @@ fun String.md5(): String = BigInteger(1, MessageDigest.getInstance("MD5").digest
 fun check2(lhs: Int, rhs: Int): Unit {
     check(lhs == rhs) { "Check failed. Wanted ${rhs}, got ${lhs}." }
 }
+
+fun check2(lhs: Long, rhs: Long): Unit {
+    check(lhs == rhs) { "Check failed. Wanted ${rhs}, got ${lhs}." }
+}
