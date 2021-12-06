@@ -1,3 +1,5 @@
+import kotlin.math.min
+
 fun main() {
     var cache: MutableMap<Int, Long> = mutableMapOf()
 
@@ -17,14 +19,33 @@ fun main() {
         }
     }
 
+    fun simulateDP(init: List<Int>, days: Int): Long {
+        var daysVals = MutableList<Long>(days + 1) { 0 }
+
+        // Initialize the days values with one full generation
+        var initList = init
+        for (day in 0..min(days, 9)) {
+            daysVals[day] = initList.count().toLong()
+            val zeros = initList.count { it == 0 }
+            initList = initList.map { if ((it - 1) >= 0) it - 1 else 6 } + List<Int>(zeros) { 8 }
+        }
+
+        // Run DP with the following function: day[n] = day[n-7] + day[n-9]
+        for (day in 10..days) {
+            daysVals[day] = daysVals[day - 7] + daysVals[day - 9]
+        }
+
+        return daysVals[days]
+    }
+
     fun part1(input: List<String>): Long {
         var chars = input.first().split(",").map { it.toInt() }
-        return chars.fold(0) { acc, i -> acc + simulate(i, 80) }
+        return simulateDP(chars, 80)
     }
 
     fun part2(input: List<String>): Long {
         var chars = input.first().split(",").map { it.toInt() }
-        return chars.fold(0) { acc, i -> acc + simulate(i, 256) }
+        return simulateDP(chars, 256)
     }
 
     val testInput = readInput("Day06_test")
