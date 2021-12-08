@@ -77,17 +77,6 @@ fun main() {
                             }
                         }
                     }
-                    // Another optimization. If there is just one option available, it's the case of the digit 7.
-                    // Do the similar prune operation as above. Yeah, I could generalize those into a single
-                    // common operation, but hey, I've already spent enough hours on this today.
-                    if (value.size == 1) {
-                        for ((key2, value2) in segmentMap) {
-                            if (key2 != key && value2.intersect(value).isNotEmpty()) {
-                                segmentMap[key2] = segmentMap[key2]!!.minus(value)
-                                madeChange = true
-                            }
-                        }
-                    }
                 }
             }
 
