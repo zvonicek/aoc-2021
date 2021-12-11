@@ -1,4 +1,4 @@
-class Point(val x: Int, val y: Int) {
+data class Point(val x: Int, val y: Int) {
     fun neighboursIndexes(): List<Point> {
         return listOf(
             Point(x-1, y),
@@ -12,24 +12,6 @@ class Point(val x: Int, val y: Int) {
         return neighboursIndexes().map {
             grid.getOrNull(it.x)?.getOrNull(it.y)
         }.filterNotNull()
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Point
-
-        if (x != other.x) return false
-        if (y != other.y) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = x
-        result = 31 * result + y
-        return result
     }
 }
 
