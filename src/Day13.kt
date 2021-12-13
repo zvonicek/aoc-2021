@@ -12,7 +12,6 @@ fun main() {
             for (line in input) {
                 var fold = "fold along ([a-z])=([0-9]+)".toRegex().find(line)
                 if (fold != null) {
-                    val components = "fold along ([a-z])=([0-9]+)".toRegex().find(line)
                     folds.add(Pair(fold!!.groupValues[1], fold!!.groupValues[2].toInt()))
                 }
 
