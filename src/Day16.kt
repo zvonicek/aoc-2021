@@ -3,36 +3,16 @@ import java.lang.Long.min
 
 fun main() {
     fun hexToBin(hex: String): String {
-        var res = hex
-        res = res.replace("0", "0000");
-        res = res.replace("1", "0001");
-        res = res.replace("2", "0010");
-        res = res.replace("3", "0011");
-        res = res.replace("4", "0100");
-        res = res.replace("5", "0101");
-        res = res.replace("6", "0110");
-        res = res.replace("7", "0111");
-        res = res.replace("8", "1000");
-        res = res.replace("9", "1001");
-        res = res.replace("A", "1010");
-        res = res.replace("B", "1011");
-        res = res.replace("C", "1100");
-        res = res.replace("D", "1101");
-        res = res.replace("E", "1110");
-        res = res.replace("F", "1111");
-        return res
+        return hex.toCharArray().joinToString(separator = "") {
+            it.digitToInt(radix = 16).toString(radix = 2).padStart(4, '0')
+        }
     }
 
     data class Packet(val inputBin: String) {
-        // 3 bits
         val version: Int
-        // 3 bits
         var type: Int
-
         var literal: Long? = null
-
         var subpackets: MutableList<Packet> = mutableListOf()
-
         var remainder: String = ""
 
         init {
@@ -115,11 +95,6 @@ fun main() {
 
     val testInput = readInput("Day16_test")
 
-    //check2(part1(testInput), 1)
-    check2(part2(testInput), 2)
-
-    //val input = readInput("Day16")
-
-    //println(part1(input))
-    //println(part2(input))
+    check2(part1(testInput), 904)
+    check2(part2(testInput), 200476472872)
 }
