@@ -90,8 +90,8 @@ fun split(tree: Tree) {
             is Tree.Leaf -> {
                 if (v.value >= 10) {
                     val newNode = Tree.Branch(
-                        Tree.Leaf(kotlin.math.floor(v.value.toDouble().div(2.toDouble())).toInt()),
-                        Tree.Leaf(kotlin.math.ceil(v.value.toDouble().div(2.toDouble())).toInt())
+                        Tree.Leaf(kotlin.math.floor(v.value /2.0).toInt()),
+                        Tree.Leaf(kotlin.math.ceil(v.value / 2.0).toInt())
                     )
                     parents[newNode.left] = newNode
                     parents[newNode.right] = newNode
