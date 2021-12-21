@@ -2,6 +2,8 @@ import java.lang.Long.max
 import kotlin.math.min
 
 fun main() {
+    // Part 1
+    
     data class Game(var p1: Int, var p2: Int, var score1: Int = 0, var score2: Int = 0, var dice: Int = 1)
     fun playRound(game: Game, playerIndex: Int) {
         val roll = 3 * game.dice + 3
@@ -16,9 +18,21 @@ fun main() {
         }
     }
 
+    fun part1(g: Game): Int {
+        var rounds = 0
+        while (g.score1 < 1000 && g.score2 < 1000) {
+            playRound(g, playerIndex = rounds % 2)
+            rounds += 1
+        }
+
+        return rounds * 3 * min(g.score1, g.score2)
+    }
+
+    // Part 2
+
     data class GameQ(var p1: Int, var p2: Int, var score1: Int = 0, var score2: Int = 0, var lastPlayer: Int = 1)
     var cache = mutableMapOf<GameQ, Pair<Long, Long>>()
-    fun playRoundQ2(game: GameQ): Pair<Long, Long> {
+    fun playRoundQ(game: GameQ): Pair<Long, Long> {
         if (game.score1 >= 21) return Pair(1, 0)
         if (game.score2 >= 21) return Pair(0, 1)
         if (cache.contains(game)) return cache[game]!!
@@ -39,7 +53,7 @@ fun main() {
                         game2.score2 += game2.p2
                     }
 
-                    val res = playRoundQ2(game2)
+                    val res = playRoundQ(game2)
                     sum = Pair(sum.first + res.first, sum.second + res.second)
                 }
             }
@@ -49,18 +63,8 @@ fun main() {
         return sum
     }
 
-    fun part1(g: Game): Int {
-        var rounds = 0
-        while (g.score1 < 1000 && g.score2 < 1000) {
-            playRound(g, playerIndex = rounds % 2)
-            rounds += 1
-        }
-
-        return rounds * 3 * min(g.score1, g.score2)
-    }
-
     fun part2(g: GameQ): Long {
-        val res = playRoundQ2(g)
+        val res = playRoundQ(g)
         return max(res.first, res.second)
     }
 
