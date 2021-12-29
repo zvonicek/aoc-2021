@@ -139,7 +139,6 @@ data class Movement(var field: Field, var cost: Int)
 
 fun dijkstra(start: Field, graph: Map<Field, List<Movement>>, target: Field): Int {
     val dist = mutableMapOf<Field, Int>()
-    val prev = mutableMapOf<Field, Field>()
     val pQ = PriorityQueue<Field>() { a, b -> dist[a]!! - dist[b]!! }
 
     for (v in graph.keys) {
@@ -159,14 +158,9 @@ fun dijkstra(start: Field, graph: Map<Field, List<Movement>>, target: Field): In
             val alt = dist[u]!! + v.cost
             if (alt < dist[v.field]!!) {
                 dist[v.field] = alt
-                prev[v.field] = u
                 // recompute value `v` in prio queue
                 pQ.remove(v.field)
                 pQ.offer(v.field)
-
-                if (prev.count() % 5000 == 0) {
-                    println("path size: " + prev.count().toString())
-                }
             }
         }
     }
